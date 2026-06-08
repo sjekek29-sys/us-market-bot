@@ -5,6 +5,9 @@ on:
     - cron: '0 21 * * 0-4'
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   send-market-summary:
     runs-on: ubuntu-latest
@@ -18,4 +21,9 @@ jobs:
           python-version: '3.11'
 
       - name: Run market summary script
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: python market_summary.py
