@@ -1,0 +1,21 @@
+name: Daily US Market Summary
+
+on:
+  schedule:
+    - cron: '0 21 * * 0-4'
+  workflow_dispatch:
+
+jobs:
+  send-market-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run market summary script
+        run: python market_summary.py
